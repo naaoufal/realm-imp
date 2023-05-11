@@ -1,0 +1,905 @@
+{
+    "properties": {
+        "MAS": {
+            "bsonType": "bool"
+        },
+        "SAO": {
+            "bsonType": "bool"
+        },
+        "__v": {
+            "bsonType": "int"
+        },
+        "_id": {
+            "bsonType": "objectId"
+        },
+        "blocked": {
+            "bsonType": "bool"
+        },
+        "cancelReason": {
+            "bsonType": "string"
+        },
+        "city": {
+            "bsonType": "object",
+            "properties": {
+                "MAS": {
+                    "bsonType": "bool"
+                },
+                "_id": {
+                    "bsonType": "string"
+                },
+                "displayPhone": {
+                    "bsonType": "string"
+                },
+                "name": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "cityId": {
+            "bsonType": "objectId"
+        },
+        "commission": {
+            "bsonType": "int"
+        },
+        "commissionStoreClient": {
+            "bsonType": "int"
+        },
+        "commissionStoreDeliveryMan": {
+            "bsonType": "int"
+        },
+        "createdAt": {
+            "bsonType": "date"
+        },
+        "customer": {
+            "bsonType": "object",
+            "properties": {
+                "_id": {
+                    "bsonType": "string"
+                },
+                "email": {
+                    "bsonType": "string"
+                },
+                "name": {
+                    "bsonType": "string"
+                },
+                "phone": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "customerId": {
+            "bsonType": "objectId"
+        },
+        "customerStatus": {
+            "bsonType": "string"
+        },
+        "deliveryMan": {
+            "bsonType": "object",
+            "properties": {
+                "GPSOn": {
+                    "bsonType": "bool"
+                },
+                "__v": {
+                    "bsonType": "int"
+                },
+                "_id": {
+                    "bsonType": "objectId"
+                },
+                "appState": {
+                    "bsonType": "string"
+                },
+                "appVersion": {
+                    "bsonType": "string"
+                },
+                "approved": {
+                    "bsonType": "bool"
+                },
+                "available": {
+                    "bsonType": "bool"
+                },
+                "balance": {
+                    "bsonType": "int"
+                },
+                "batteryCritical": {
+                    "bsonType": "bool"
+                },
+                "batteryLevel": {
+                    "bsonType": "double"
+                },
+                "cityId": {
+                    "bsonType": "objectId"
+                },
+                "commission": {
+                    "bsonType": "int"
+                },
+                "createdAt": {
+                    "bsonType": "date"
+                },
+                "deliveryType": {
+                    "bsonType": "string"
+                },
+                "dispatchable": {
+                    "bsonType": "bool"
+                },
+                "dispatchingType": {
+                    "bsonType": "string"
+                },
+                "email": {
+                    "bsonType": "string"
+                },
+                "enhancedLocation": {
+                    "bsonType": "object",
+                    "properties": {
+                        "_id": {
+                            "bsonType": "objectId"
+                        },
+                        "coordinates": {
+                            "bsonType": "array",
+                            "items": {
+                                "bsonType": "double"
+                            }
+                        },
+                        "type": {
+                            "bsonType": "string"
+                        }
+                    }
+                },
+                "freeFromPartnerOrders": {
+                    "bsonType": "bool"
+                },
+                "isConnected": {
+                    "bsonType": "bool"
+                },
+                "lastKnownLocations": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "objectId"
+                            },
+                            "location": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "double"
+                                }
+                            },
+                            "timestamp": {
+                                "bsonType": "date"
+                            }
+                        }
+                    }
+                },
+                "lastPositionDate": {
+                    "bsonType": "date"
+                },
+                "location": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "double"
+                    }
+                },
+                "name": {
+                    "bsonType": "string"
+                },
+                "phone": {
+                    "bsonType": "string"
+                },
+                "planified": {
+                    "bsonType": "bool"
+                },
+                "rate": {
+                    "bsonType": "int"
+                },
+                "updatedAt": {
+                    "bsonType": "date"
+                }
+            }
+        },
+        "deliveryManId": {
+            "bsonType": "objectId"
+        },
+        "deliveryManLocationAtAccept": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "double"
+            }
+        },
+        "deliveryManStatus": {
+            "bsonType": "string"
+        },
+        "deliveryManStatusTimes": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "object",
+                "properties": {
+                    "admin": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "string"
+                            },
+                            "by": {
+                                "bsonType": "string"
+                            },
+                            "email": {
+                                "bsonType": "string"
+                            },
+                            "entityId": {
+                                "bsonType": "string"
+                            },
+                            "scope": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "string"
+                                }
+                            },
+                            "userName": {
+                                "bsonType": "string"
+                            },
+                            "username": {
+                                "bsonType": "string"
+                            }
+                        }
+                    },
+                    "date": {
+                        "bsonType": "date"
+                    },
+                    "deliveryMan": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "objectId"
+                            },
+                            "location": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "double"
+                                }
+                            },
+                            "name": {
+                                "bsonType": "string"
+                            }
+                        }
+                    },
+                    "status": {
+                        "bsonType": "string"
+                    }
+                }
+            }
+        },
+        "destinationLocation": {
+            "bsonType": "object",
+            "properties": {
+                "coordinates": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "double"
+                    }
+                },
+                "type": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "dispatchingStatus": {
+            "bsonType": "string"
+        },
+        "dispatchingStatusTimes": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "object",
+                "properties": {
+                    "admin": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "string"
+                            },
+                            "by": {
+                                "bsonType": "string"
+                            },
+                            "email": {
+                                "bsonType": "string"
+                            },
+                            "entityId": {
+                                "bsonType": "string"
+                            },
+                            "scope": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "string"
+                                }
+                            },
+                            "userName": {
+                                "bsonType": "string"
+                            },
+                            "username": {
+                                "bsonType": "string"
+                            }
+                        }
+                    },
+                    "date": {
+                        "bsonType": "date"
+                    },
+                    "deliveryMan": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "objectId"
+                            },
+                            "location": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "double"
+                                }
+                            },
+                            "name": {
+                                "bsonType": "string"
+                            }
+                        }
+                    },
+                    "status": {
+                        "bsonType": "string"
+                    }
+                }
+            }
+        },
+        "distanceStoreClient": {
+            "bsonType": "int"
+        },
+        "distanceStoreDeliveryMan": {
+            "bsonType": "int"
+        },
+        "inValidNewUser": {
+            "bsonType": "bool"
+        },
+        "inValidPhone": {
+            "bsonType": "bool"
+        },
+        "inValidPosition": {
+            "bsonType": "bool"
+        },
+        "inValidUser": {
+            "bsonType": "bool"
+        },
+        "invalidReason": {
+            "bsonType": "string"
+        },
+        "notPaying": {
+            "bsonType": "bool"
+        },
+        "orderRated": {
+            "bsonType": "bool"
+        },
+        "organisationOrderDetail": {
+            "bsonType": "object",
+            "properties": {
+                "code": {
+                    "bsonType": "string"
+                },
+                "id": {
+                    "bsonType": "string"
+                },
+                "state": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "payment": {
+            "bsonType": "object",
+            "properties": {
+                "_id": {
+                    "bsonType": "string"
+                },
+                "accompagnementPrice": {
+                    "bsonType": "int"
+                },
+                "accompagnementServicePrice": {
+                    "bsonType": "int"
+                },
+                "appVersion": {
+                    "bsonType": "string"
+                },
+                "cartDetails": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "string"
+                            },
+                            "items": {
+                                "bsonType": "array",
+                                "items": {
+                                    "bsonType": "object",
+                                    "properties": {
+                                        "_id": {
+                                            "bsonType": "string"
+                                        },
+                                        "flag": {
+                                            "bsonType": "string"
+                                        },
+                                        "isFromKaalix": {
+                                            "bsonType": "bool"
+                                        },
+                                        "itemId": {
+                                            "bsonType": "string"
+                                        },
+                                        "itemPrice": {
+                                            "bsonType": "int"
+                                        },
+                                        "itemTotalPrice": {
+                                            "bsonType": "int"
+                                        },
+                                        "minCartPrice": {
+                                            "bsonType": "int"
+                                        },
+                                        "name": {
+                                            "bsonType": "string"
+                                        },
+                                        "note": {
+                                            "bsonType": "string"
+                                        },
+                                        "originalPrice": {
+                                            "bsonType": "int"
+                                        },
+                                        "promoSubType": {
+                                            "bsonType": "string"
+                                        },
+                                        "promoType": {
+                                            "bsonType": "string"
+                                        },
+                                        "quantity": {
+                                            "bsonType": "int"
+                                        },
+                                        "specificationPrice": {
+                                            "bsonType": "int"
+                                        },
+                                        "value": {
+                                            "bsonType": "int"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": {
+                                "bsonType": "string"
+                            },
+                            "productId": {
+                                "bsonType": "string"
+                            }
+                        }
+                    }
+                },
+                "cityId": {
+                    "bsonType": "string"
+                },
+                "createdAt": {
+                    "bsonType": "string"
+                },
+                "creneauText": {
+                    "bsonType": "string"
+                },
+                "customer": {
+                    "bsonType": "object",
+                    "properties": {
+                        "kaalixPay": {
+                            "bsonType": "int"
+                        },
+                        "name": {
+                            "bsonType": "string"
+                        },
+                        "nbOrders": {
+                            "bsonType": "int"
+                        },
+                        "phone": {
+                            "bsonType": "string"
+                        },
+                        "rewardPoints": {
+                            "bsonType": "int"
+                        },
+                        "screen": {
+                            "bsonType": "string"
+                        },
+                        "status": {
+                            "bsonType": "string"
+                        },
+                        "web": {
+                            "bsonType": "bool"
+                        },
+                        "xpPoints": {
+                            "bsonType": "int"
+                        }
+                    }
+                },
+                "customerId": {
+                    "bsonType": "string"
+                },
+                "deliveryPrice": {
+                    "bsonType": "int"
+                },
+                "destinationAddress": {
+                    "bsonType": "object",
+                    "properties": {
+                        "address": {
+                            "bsonType": "string"
+                        },
+                        "details": {
+                            "bsonType": "string"
+                        },
+                        "location": {
+                            "bsonType": "array",
+                            "items": {
+                                "bsonType": "double"
+                            }
+                        },
+                        "name": {
+                            "bsonType": "string"
+                        },
+                        "phone": {
+                            "bsonType": "string"
+                        }
+                    }
+                },
+                "errorMessageForPromo": {
+                    "bsonType": "string"
+                },
+                "fromPaymentCall": {
+                    "bsonType": "bool"
+                },
+                "invoiceUrl": {
+                    "bsonType": "string"
+                },
+                "newPhone": {
+                    "bsonType": "string"
+                },
+                "oldPhone": {
+                    "bsonType": "string"
+                },
+                "orderPrice": {
+                    "bsonType": "int"
+                },
+                "order_price_original": {
+                    "bsonType": "int"
+                },
+                "originalDeliveryPrice": {
+                    "bsonType": "int"
+                },
+                "originalOrderPrice": {
+                    "bsonType": "int"
+                },
+                "originalTotal": {
+                    "bsonType": "int"
+                },
+                "paymentGateway": {
+                    "bsonType": "string"
+                },
+                "paymentUrl": {
+                    "bsonType": "string"
+                },
+                "payments": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "object",
+                        "properties": {
+                            "_id": {
+                                "bsonType": "string"
+                            },
+                            "amount": {
+                                "bsonType": "int"
+                            },
+                            "gateway": {
+                                "bsonType": "string"
+                            }
+                        }
+                    }
+                },
+                "phoneChanged": {
+                    "bsonType": "bool"
+                },
+                "pickupAddress": {
+                    "bsonType": "object",
+                    "properties": {
+                        "address": {
+                            "bsonType": "string"
+                        },
+                        "location": {
+                            "bsonType": "array",
+                            "items": {
+                                "bsonType": "double"
+                            }
+                        },
+                        "name": {
+                            "bsonType": "string"
+                        },
+                        "phone": {
+                            "bsonType": "string"
+                        }
+                    }
+                },
+                "priceInvoice": {
+                    "bsonType": "int"
+                },
+                "pricePaid": {
+                    "bsonType": "int"
+                },
+                "promo": {
+                    "bsonType": "int"
+                },
+                "promoCode": {
+                    "bsonType": "string"
+                },
+                "promoInfo": {
+                    "bsonType": "object",
+                    "properties": {
+                        "promoItemCount": {
+                            "bsonType": "int"
+                        },
+                        "promoKaalixItemCount": {
+                            "bsonType": "int"
+                        },
+                        "promoStore": {
+                            "bsonType": "bool"
+                        },
+                        "promoStoreItemCount": {
+                            "bsonType": "int"
+                        },
+                        "promoType": {
+                            "bsonType": "string"
+                        },
+                        "totalPromo": {
+                            "bsonType": "int"
+                        },
+                        "totalPromoKaalix": {
+                            "bsonType": "int"
+                        },
+                        "totalPromoStore": {
+                            "bsonType": "int"
+                        }
+                    }
+                },
+                "promoStore": {
+                    "bsonType": "object",
+                    "properties": {
+                        "type": {
+                            "bsonType": "object",
+                            "properties": {
+                                "discountType": {
+                                    "bsonType": "string"
+                                },
+                                "enabled": {
+                                    "bsonType": "bool"
+                                },
+                                "isFromKaalix": {
+                                    "bsonType": "bool"
+                                },
+                                "minCartPrice": {
+                                    "bsonType": "int"
+                                },
+                                "type": {
+                                    "bsonType": "string"
+                                },
+                                "value": {
+                                    "bsonType": "int"
+                                }
+                            }
+                        }
+                    }
+                },
+                "promoType": {
+                    "bsonType": "string"
+                },
+                "randomId": {
+                    "bsonType": "string"
+                },
+                "reductionPrice": {
+                    "bsonType": "int"
+                },
+                "scheduled": {
+                    "bsonType": "bool"
+                },
+                "serviceType": {
+                    "bsonType": "string"
+                },
+                "shceduleDate": {
+                    "bsonType": "string"
+                },
+                "shouldDeliveryManPayStore": {
+                    "bsonType": "bool"
+                },
+                "status": {
+                    "bsonType": "string"
+                },
+                "storeCommission": {
+                    "bsonType": "int"
+                },
+                "storeCommissionType": {
+                    "bsonType": "string"
+                },
+                "storeId": {
+                    "bsonType": "string"
+                },
+                "total": {
+                    "bsonType": "int"
+                },
+                "updatedAt": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "pickupLocation": {
+            "bsonType": "object",
+            "properties": {
+                "coordinates": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "double"
+                    }
+                },
+                "type": {
+                    "bsonType": "string"
+                }
+            }
+        },
+        "preparationTime": {
+            "bsonType": "int"
+        },
+        "shortId": {
+            "bsonType": "string"
+        },
+        "src": {
+            "bsonType": "string"
+        },
+        "startedPreparation": {
+            "bsonType": "bool"
+        },
+        "store": {
+            "bsonType": "object",
+            "properties": {
+                "SAO": {
+                    "bsonType": "bool"
+                },
+                "_id": {
+                    "bsonType": "string"
+                },
+                "contact": {
+                    "bsonType": "string"
+                },
+                "imageUrl": {
+                    "bsonType": "string"
+                },
+                "location": {
+                    "bsonType": "array",
+                    "items": {
+                        "bsonType": "string"
+                    }
+                },
+                "name": {
+                    "bsonType": "string"
+                },
+                "phone": {
+                    "bsonType": "string"
+                },
+                "promoSetting": {
+                    "bsonType": "object",
+                    "properties": {
+                        "discountType": {
+                            "bsonType": "string"
+                        },
+                        "enabled": {
+                            "bsonType": "bool"
+                        },
+                        "isFromKaalix": {
+                            "bsonType": "bool"
+                        },
+                        "minCartPrice": {
+                            "bsonType": "int"
+                        },
+                        "type": {
+                            "bsonType": "string"
+                        },
+                        "value": {
+                            "bsonType": "int"
+                        }
+                    }
+                }
+            }
+        },
+        "storeId": {
+            "bsonType": "objectId"
+        },
+        "storeStatus": {
+            "bsonType": "string"
+        },
+        "timing": {
+            "bsonType": "object",
+            "properties": {
+                "SPPT": {
+                    "bsonType": "int"
+                },
+                "cmdDuration": {
+                    "bsonType": "int"
+                },
+                "delivered": {
+                    "bsonType": "int"
+                },
+                "deliveryManChange": {
+                    "bsonType": "bool"
+                },
+                "deliveryTime": {
+                    "bsonType": "int"
+                },
+                "dispatchingTime_AC_WFA": {
+                    "bsonType": "int"
+                },
+                "dispatchingTime_ONHOLD_DISPATCHING": {
+                    "bsonType": "int"
+                },
+                "dispatchingType": {
+                    "bsonType": "string"
+                },
+                "driver_ATD": {
+                    "bsonType": "int"
+                },
+                "driver_ATP": {
+                    "bsonType": "int"
+                },
+                "driver_Accepted": {
+                    "bsonType": "int"
+                },
+                "driver_CFD": {
+                    "bsonType": "int"
+                },
+                "driver_SD": {
+                    "bsonType": "int"
+                },
+                "driver_Store": {
+                    "bsonType": "int"
+                },
+                "driver_UI": {
+                    "bsonType": "int"
+                },
+                "driver_delivered": {
+                    "bsonType": "int"
+                },
+                "driver_delivery": {
+                    "bsonType": "int"
+                },
+                "driver_waiting_store": {
+                    "bsonType": "int"
+                },
+                "durationAfterAccept": {
+                    "bsonType": "int"
+                },
+                "order_time": {
+                    "bsonType": "int"
+                },
+                "preparationTime": {
+                    "bsonType": "int"
+                },
+                "storeAccepted": {
+                    "bsonType": "int"
+                },
+                "validationTime": {
+                    "bsonType": "int"
+                }
+            }
+        },
+        "tryDispatch": {
+            "bsonType": "int"
+        },
+        "type": {
+            "bsonType": "string"
+        },
+        "updatedAt": {
+            "bsonType": "date"
+        },
+        "validAt": {
+            "bsonType": "date"
+        },
+        "validatorId": {
+            "bsonType": "objectId"
+        }
+    },
+    "title": "order"
+}

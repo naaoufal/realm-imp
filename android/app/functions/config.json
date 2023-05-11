@@ -1,0 +1,20 @@
+[
+    {
+        "name": "authFunc",
+        "private": false,
+        "run_as_system": true,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "toHashPassword",
+        "private": false,
+        "run_as_system": true,
+        "disable_arg_logs": true
+    },
+    {
+        "name": "authErrorReport",
+        "private": false,
+        "run_as_system": true,
+        "disable_arg_logs": true
+    }
+]

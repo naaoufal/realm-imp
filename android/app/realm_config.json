@@ -1,0 +1,8 @@
+{
+    "app_id": "auth-staging-jcnza",
+    "config_version": 20210101,
+    "name": "auth-staging",
+    "location": "IE",
+    "provider_region": "aws-eu-west-1",
+    "deployment_model": "LOCAL"
+}

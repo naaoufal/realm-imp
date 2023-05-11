@@ -1,0 +1,45 @@
+{
+    "collection": "orders",
+    "database": "srv-dispatching",
+    "roles": [
+        {
+            "name": "readAllWriteOwn",
+            "apply_when": {
+                "document_filters": {
+                    "read": {
+                        "customerId": "%%user.id"
+                    },
+                    "write": {
+                        "customerId": "%%user.id"
+                    }
+                },
+                "read": true,
+                "write": false
+            },
+            "document_filters": {
+                "write": {
+                    "customerId": "%%user.id"
+                },
+                "read": true
+            },
+            "read": true,
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "search": true
+        },
+        {
+            "name": "readAll",
+            "apply_when": {},
+            "document_filters": {
+                "write": false,
+                "read": true
+            },
+            "read": true,
+            "write": false,
+            "insert": false,
+            "delete": false,
+            "search": true
+        }
+    ]
+}
