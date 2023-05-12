@@ -164,16 +164,16 @@ function AppWrapper(): JSX.Element {
     const loggedUser = await app.logIn(credentials);
     const config: any = {
       schema: [OrderSchema],
-      sync: {
-        user: app.currentUser,
-        flexible: true,
-        // partitionValue: 'PUBLIC',
-        existingRealmFileBehavior: {type: 'openImmediately'},
-        newRealmFileBehavior: {type: 'openImmediately'},
-      },
+      // sync: {
+      //   user: app.currentUser,
+      //   flexible: true,
+      //   // partitionValue: 'PUBLIC',
+      //   existingRealmFileBehavior: {type: 'openImmediately'},
+      //   newRealmFileBehavior: {type: 'openImmediately'},
+      // },
       schemaVersion: 10,
       // inMemory: true,
-      path: `/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/${app.currentUser?.id}/flx_sync_default.realm`,
+      path: Realm.defaultPath, //`/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/${app.currentUser?.id}/flx_sync_default.realm`,
       // '/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/645cc82c85c1c560e692ed38/flx_sync_default.realm',
       // deleteRealmIfMigrationNeeded: true,
     };
@@ -186,17 +186,17 @@ function AppWrapper(): JSX.Element {
     try {
       getRealm().then(async realm => {
         // new subs config :
-        const orders = realm.objects('order');
-        await realm.subscriptions.update(subs => {
-          subs.add(orders);
-          console.log('orders', orders);
-          setData([...orders]);
-        });
+        // const orders = realm.objects('order');
+        // await realm.subscriptions.update(subs => {
+        //   subs.add(orders);
+        //   console.log('orders', orders);
+        //   setData([...orders]);
+        // });
         // realm.close();
         // old config :
-        // let orders: any = realm?.objects('order');
-        // console.log('orders', orders, realm.path, app.currentUser?.id);
-        // setData([...orders]);
+        let orders: any = realm?.objects('order');
+        console.log('orders', orders, realm.path, app.currentUser?.id);
+        setData([...orders]);
         // realm.close();
       });
     } catch (error) {
