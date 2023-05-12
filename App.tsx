@@ -28,6 +28,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import 'react-native-get-random-values';
 import Realm, {BSON} from 'realm';
 // const Realm = require('realm');
 import {
@@ -40,6 +41,7 @@ import {
 // import getRealm, {OrderSchema} from './RealmConfig';
 import {realmContext} from './RealmContext';
 import {OrderSchema} from './RealmConfig';
+import {v4 as uuid} from 'uuid';
 // import getRealm, {OrderSchema} from './RealmConfig';
 
 const {RealmProvider, useRealm, useQuery} = realmContext;
@@ -64,13 +66,13 @@ function AppWrapper(): JSX.Element {
       // delete any previous file :
       Realm.deleteFile({
         schema: [OrderSchema],
-        sync: {
-          user: loggedUser,
-          flexible: true,
-          // partitionValue: 'PUBLIC',
-          // existingRealmFileBehavior: {type: 'openImmediately'},
-          // newRealmFileBehavior: {type: 'openImmediately'},
-        },
+        // sync: {
+        //   user: loggedUser,
+        //   flexible: true,
+        //   // partitionValue: 'PUBLIC',
+        //   // existingRealmFileBehavior: {type: 'openImmediately'},
+        //   // newRealmFileBehavior: {type: 'openImmediately'},
+        // },
         // schemaVersion: 10,
         // inMemory: true,
         // path: '/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/645cc82c85c1c560e692ed38/flx_sync_default.realm',
@@ -143,7 +145,7 @@ function AppWrapper(): JSX.Element {
       // use listeen :
       const orders: any = await realm.objects(OrderSchema);
       // orders.addListener(() => {
-      console.log('orders', orders);
+      console.log('orders', orders, uuid());
       // setData([...orders]);
       // });
 
@@ -163,57 +165,110 @@ function AppWrapper(): JSX.Element {
     const config: any = {
       schema: [OrderSchema],
       sync: {
-        user: loggedUser,
+        user: app.currentUser,
         flexible: true,
         // partitionValue: 'PUBLIC',
-        // existingRealmFileBehavior: {type: 'openImmediately'},
-        // newRealmFileBehavior: {type: 'openImmediately'},
+        existingRealmFileBehavior: {type: 'openImmediately'},
+        newRealmFileBehavior: {type: 'openImmediately'},
       },
       schemaVersion: 10,
       // inMemory: true,
-      // path: '/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/645cc82c85c1c560e692ed38/flx_sync_default.realm',
+      path: `/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/${app.currentUser?.id}/flx_sync_default.realm`,
+      // '/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/645cc82c85c1c560e692ed38/flx_sync_default.realm',
       // deleteRealmIfMigrationNeeded: true,
     };
     return Realm.open(config);
   };
 
+  // let realm: any;
+
+  const fetchData = async () => {
+    try {
+      getRealm().then(async realm => {
+        // new subs config :
+        const orders = realm.objects('order');
+        await realm.subscriptions.update(subs => {
+          subs.add(orders);
+          console.log('orders', orders);
+          setData([...orders]);
+        });
+        // realm.close();
+        // old config :
+        // let orders: any = realm?.objects('order');
+        // console.log('orders', orders, realm.path, app.currentUser?.id);
+        // setData([...orders]);
+        // realm.close();
+      });
+    } catch (error) {
+      console.log('error fetch data', error);
+    }
+  };
+
+  const [messageV0, setMessageV0] = useState('');
+  const [messageV1, setMessageV1] = useState('');
+
   const createOrder = async () => {
     try {
-      await getRealm().then(realm => {
+      getRealm().then(realm => {
         realm.write(() => {
-          realm.subscriptions.update(subs => {
-            realm.create(OrderSchema, {
-              _id: new BSON.ObjectID(),
-              customerStatus: 'ACCEPTED',
-              // customerId: '629d39f9044df404dafcf296',
-            });
+          realm.create('order', {
+            _id: new BSON.ObjectID(),
+            customerStatus: messageV0,
+            // customerId: '629d39f9044df404dafcf296',
           });
-          realm.close();
         });
+        let orders = realm.objects('order');
+        setData([...orders]);
       });
-      // .subscriptions.update(subs => {
-      //   const orders = realm.objects(OrderSchema);
-      //   realm.write(() => {
-      //     realm.create('order', {
-      //       _id: new BSON.ObjectID(),
-      //       customerStatus: 'ACCEPTED',
-      //       // customerId: '629d39f9044df404dafcf296',
-      //     });
-      //     subs.add(orders);
       console.log('create success !!!');
       //   });
       // });
     } catch (error) {
-      console.log('error', error);
+      console.log('error create data :', error);
     }
   };
 
   const editOrder = (id: any) => {
-    console.log('edit order !!!', id);
+    // console.log('edit order !!!', id);
+    try {
+      getRealm().then(realm => {
+        realm.write(() => {
+          let editedOrder = realm.objectForPrimaryKey('order', id);
+          console.log('edited order :', editedOrder);
+          realm.create(
+            'order',
+            {
+              _id: editedOrder?._id,
+              customerStatus: messageV1,
+            },
+            'modified',
+          );
+          setData([...realm.objects('order')]);
+        });
+      });
+    } catch (error) {
+      console.log('error update data :', error);
+    }
+  };
+
+  const deleteOrder = (id: any) => {
+    // console.log('delete order !!!', id);
+    try {
+      getRealm().then(realm => {
+        realm.write(() => {
+          let deleteOrder = realm.objectForPrimaryKey('order', id);
+          realm.delete(deleteOrder);
+          setData([...realm.objects('order')]);
+        });
+      });
+    } catch (error) {
+      console.log('error delete data :', error);
+    }
   };
 
   useEffect(() => {
-    someFunc();
+    // someFunc();
+    fetchData();
   }, []);
 
   return (
@@ -230,17 +285,50 @@ function AppWrapper(): JSX.Element {
     //     </RealmProvider>
     //   </UserProvider>
     // </AppProvider>
-    <View>
-      <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+      }}>
+      <ScrollView>
         {data?.length > 0 ? (
           <View>
             {data &&
               data?.map(element => (
                 <View>
                   <Text>{element?.customerStatus}</Text>
-                  <TouchableOpacity onPress={() => editOrder(item?._id)}>
-                    <Text>edit</Text>
-                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '40%',
+                      margin: 10,
+                      padding: 10,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        paddingHorizontal: 20,
+                        paddingVertical: 10,
+                        backgroundColor: 'orange',
+                        width: '100%',
+                        marginLeft: 10,
+                        marginRight: 10,
+                      }}
+                      onPress={() => editOrder(element?._id)}>
+                      <Text>edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        paddingHorizontal: 20,
+                        paddingVertical: 10,
+                        backgroundColor: 'red',
+                        width: '100%',
+                      }}
+                      onPress={() => deleteOrder(element?._id)}>
+                      <Text>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               ))}
           </View>
@@ -249,12 +337,38 @@ function AppWrapper(): JSX.Element {
             <Text>No Data Found</Text>
           </View>
         )}
-      </View>
-      <View>
-        <TouchableOpacity onPress={createOrder}>
-          <Text>Create</Text>
-        </TouchableOpacity>
-      </View>
+        <View>
+          <View
+            style={{
+              backgroundColor: 'gray',
+              marginBottom: 10,
+            }}>
+            <TextInput
+              placeholder="create field"
+              onChangeText={text => setMessageV0(text)}
+            />
+          </View>
+          <View
+            style={{
+              backgroundColor: 'gray',
+              marginBottom: 10,
+            }}>
+            <TextInput
+              placeholder="edit field"
+              onChangeText={text => setMessageV1(text)}
+            />
+          </View>
+          <TouchableOpacity
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              backgroundColor: 'purple',
+            }}
+            onPress={createOrder}>
+            <Text>Create</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 }
