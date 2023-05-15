@@ -40,7 +40,7 @@ import {
 } from '@realm/react';
 // import getRealm, {OrderSchema} from './RealmConfig';
 import {realmContext} from './RealmContext';
-import {OrderSchema} from './RealmConfig';
+import {ItemSchema} from './RealmConfig';
 import {v4 as uuid} from 'uuid';
 // import getRealm, {OrderSchema} from './RealmConfig';
 
@@ -51,7 +51,8 @@ Realm.copyBundledRealmFiles();
 function AppWrapper(): JSX.Element {
   const [data, setData] = useState([]);
 
-  const app = new Realm.App({id: 'auth-staging-jcnza'});
+  const app = new Realm.App({id: 'application-0-zsevx'});
+  // const app = new Realm.App({id: 'auth-staging-jcnza'});
   const credentials = Realm.Credentials.anonymous();
 
   // logs :
@@ -163,17 +164,24 @@ function AppWrapper(): JSX.Element {
   const getRealm = async () => {
     const loggedUser = await app.logIn(credentials);
     const config: any = {
-      schema: [OrderSchema],
-      // sync: {
-      //   user: app.currentUser,
-      //   flexible: true,
-      //   // partitionValue: 'PUBLIC',
-      //   existingRealmFileBehavior: {type: 'openImmediately'},
-      //   newRealmFileBehavior: {type: 'openImmediately'},
-      // },
-      schemaVersion: 10,
+      schema: [ItemSchema],
+      sync: {
+        user: app.currentUser,
+        flexible: true,
+        // partitionValue: 'PUBLIC',
+        // existingRealmFileBehavior: {type: 'openImmediately'},
+        // newRealmFileBehavior: {type: 'openImmediately'},
+        initialSubscriptions: {
+      update: (subs, realm) => {
+        subs.add(
+          realm.objects("Item")
+        );
+      },
+    },
+      },
+      schemaVersion: 12,
       // inMemory: true,
-      path: Realm.defaultPath, //`/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/${app.currentUser?.id}/flx_sync_default.realm`,
+      // path: Realm.defaultPath, //`/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/${app.currentUser?.id}/flx_sync_default.realm`,
       // '/data/data/com.myrealmapp/files/mongodb-realm/auth-staging-jcnza/645cc82c85c1c560e692ed38/flx_sync_default.realm',
       // deleteRealmIfMigrationNeeded: true,
     };
@@ -182,22 +190,61 @@ function AppWrapper(): JSX.Element {
 
   // let realm: any;
 
+  // get data using realm :
   const fetchData = async () => {
+
+    // const mongodb: any = app.currentUser?.mongoClient('mongodb-atlas');
+    //     const collection = mongodb.db('__realm_sync_64610cd23f6e0e323d2e050c').collection('Item');
+    //     const dataRealm = await collection.find({});
+    //     console.log('orders', JSON.stringify(dataRealm));
+
     try {
       getRealm().then(async realm => {
         // new subs config :
         // const orders = realm.objects('order');
-        // await realm.subscriptions.update(subs => {
-        //   subs.add(orders);
-        //   console.log('orders', orders);
-        //   setData([...orders]);
+
+        // new logic :
+        // if (orders?.length === 0) {
+        //   // create new data in realm :
+        //   console.log('create new realm data !!!');
+        //   dataRealm?.map((element: any) => {
+        //     realm.write(() => {
+        //       realm.create('order', {
+        //         _id: element?._id,
+        //         customerStatus: element?.customerStatus,
+        //         // customerId: '629d39f9044df404dafcf296',
+        //       });
+        //     });
+        //     let orders = realm.objects('order');
+        //     setData([...orders]);
+        //   });
+        // } else {
+        // fetch current data in realm :
+        console.log('fetch current data in realm !!!', JSON.stringify(realm.subscriptions.state));
+        // setData([...orders]);
+        // }
+
+        // await realm.addListener('change', async () => {
+          await realm.subscriptions.update(subs => {
+          const or = realm?.objects('Item');
+        // console.log('orders', subs, JSON.stringify(or));
+        console.log('or', or)
+        subs.add(or);
+        subs.add(realm.objects("Item"), {
+          name: 'Item',
+          throwOnUpdate: true,
+        });
+        
+        realm.addListener('change', () => {
+          console.log('somthing change !!!');
+          setData([...or]);
+        });
+        });
         // });
-        // realm.close();
         // old config :
-        let orders: any = realm?.objects('order');
-        console.log('orders', orders, realm.path, app.currentUser?.id);
-        setData([...orders]);
-        // realm.close();
+        // let orders: any = realm?.objects('order');
+        // console.log('orders', orders, realm.path, app.currentUser?.id);
+        // setData([...orders]);
       });
     } catch (error) {
       console.log('error fetch data', error);
@@ -207,20 +254,25 @@ function AppWrapper(): JSX.Element {
   const [messageV0, setMessageV0] = useState('');
   const [messageV1, setMessageV1] = useState('');
 
+  // create new data using realm :
   const createOrder = async () => {
     try {
       getRealm().then(realm => {
-        realm.write(() => {
-          realm.create('order', {
-            _id: new BSON.ObjectID(),
-            customerStatus: messageV0,
-            // customerId: '629d39f9044df404dafcf296',
+        realm.subscriptions.update(subs => {
+          realm.write(() => {
+            realm.create('order', {
+              _id: new BSON.ObjectID(),
+              customerStatus: messageV0,
+              // customerId: '629d39f9044df404dafcf296',
+            });
           });
+          let orders = realm.objects('order');
+
+          subs.add(orders);
+          setData([...orders]);
         });
-        let orders = realm.objects('order');
-        setData([...orders]);
+        // console.log('create success !!!');
       });
-      console.log('create success !!!');
       //   });
       // });
     } catch (error) {
@@ -228,6 +280,7 @@ function AppWrapper(): JSX.Element {
     }
   };
 
+  // edit data by ID using realm :
   const editOrder = (id: any) => {
     // console.log('edit order !!!', id);
     try {
@@ -251,6 +304,7 @@ function AppWrapper(): JSX.Element {
     }
   };
 
+  // delete data by ID using realm :
   const deleteOrder = (id: any) => {
     // console.log('delete order !!!', id);
     try {
@@ -293,11 +347,11 @@ function AppWrapper(): JSX.Element {
         width: '100%',
       }}>
       <ScrollView>
-        {data?.length > 0 ? (
+        {data && data?.length > 0 ? (
           <View>
             {data &&
               data?.map(element => (
-                <View>
+                <View key={element?._id}>
                   <Text>{element?.customerStatus}</Text>
                   <View
                     style={{
@@ -315,7 +369,8 @@ function AppWrapper(): JSX.Element {
                         marginLeft: 10,
                         marginRight: 10,
                       }}
-                      onPress={() => editOrder(element?._id)}>
+                      // onPress={() => editOrder(element?._id)}
+                      >
                       <Text>edit</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

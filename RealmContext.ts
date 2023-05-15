@@ -5,7 +5,7 @@ import {
   useUser,
   createRealmContext,
 } from '@realm/react';
-import {OrderSchema} from './RealmConfig';
+import {ItemSchema} from './RealmConfig';
 import Realm from 'realm';
 import {useState} from 'react';
 
@@ -20,9 +20,10 @@ const userContent = async () => {
 };
 
 export const realmContext = createRealmContext({
-  schema: [OrderSchema],
-  // sync: {
-  //   // user: user,
-  //   flexible: true,
-  // },
+  schema: [ItemSchema],
+  sync: {
+    user: app.currentUser,
+    flexible: true,
+  },
+  schemaVersion: 12,
 });
